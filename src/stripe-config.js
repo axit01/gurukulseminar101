@@ -1,6 +1,8 @@
 import { loadStripe } from '@stripe/stripe-js';
 
-// Replace with your publishable key from Stripe Dashboard
-const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+// Use publishable key from env (Vite) to avoid committing secrets.
+// Set VITE_STRIPE_PUBLISHABLE_KEY in your .env file (e.g. .env.local)
+const publishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '';
+const stripePromise = loadStripe(publishableKey);
 
 export { stripePromise };

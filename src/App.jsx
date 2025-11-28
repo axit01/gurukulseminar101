@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react'
 import './App.css'
 import { Toaster } from 'sonner'
-import brandLogo from './assets/brand-logo.svg'
-import heroImage from './assets/hero-image.svg'
-import avatar1 from './assets/avatar-1.svg'
-import avatar2 from './assets/avatar-2.svg'
-import avatar3 from './assets/avatar-3.svg'
+import brandLogo from './assets/splash_image.png'
+import heroImage from './assets/image.png'
+import speakerImage from './assets/Speaker.JPG'
 import { RulesAndFormModal } from './components/RegistrationForm'
+import { subscribeRegistrationCount, fetchRegistrationCount } from './Firebase'
 
 function Header() {
   const [open, setOpen] = useState(false)
@@ -56,12 +55,11 @@ function Hero() {
       <div className="hero-media">
         <img src={heroImage} alt="hero" />
       </div>
-      <div className="hero-title">Glimpse of Youth seminar 1.0</div>
-      <div className="dots">
+     
         <span />
         <span />
         <span />
-      </div>
+     
     </section>
   )
 }
@@ -160,18 +158,17 @@ function StatsCard({ value, targetDate }) {
 }
 
 function Speakers() {
-  const people = [
-    { id: 1, name: 'Aisha Khan', img: avatar1 },
-    { id: 2, name: 'David Lee', img: avatar2 },
-    { id: 3, name: 'Maria Gomez', img: avatar3 },
-  ]
+    const people = [
+
+      { id: 2, name: 'Pu. Achaljivan swami', img: speakerImage },
+    ]
 
   return (
     <section className="speakers">
       <h4>Our Speakers</h4>
       <div className="speaker-list">
         {people.map((p) => (
-          <div key={p.id} className="speaker-card">
+          <div key={p.id} className="speaker-card" align="center">
             <img src={p.img} alt={p.name} className="speaker-thumb" />
             <div className="speaker-name">{p.name}</div>
           </div>
@@ -183,18 +180,11 @@ function Speakers() {
 
 function Footer() {
   const socials = [
-    { id: 'twitter', href: 'https://twitter.com', label: 'Twitter', svg: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 5.92c-.66.3-1.37.52-2.12.61.76-.46 1.34-1.18 1.61-2.04-.71.42-1.5.72-2.34.88A3.6 3.6 0 0 0 11.5 9.5c0 .28.03.56.09.82-3-.15-5.67-1.6-7.46-3.8-.31.53-.49 1.15-.49 1.8 0 1.24.63 2.33 1.6 2.97-.59-.02-1.15-.18-1.64-.45v.05c0 1.73 1.22 3.17 2.84 3.5-.3.08-.61.12-.94.12-.23 0-.45-.02-.67-.06.45 1.42 1.76 2.46 3.32 2.49A7.24 7.24 0 0 1 3 19.54 10.2 10.2 0 0 0 8.63 21c6.53 0 10.1-5.92 10.1-11.05v-.5A7.4 7.4 0 0 0 22 5.92z" fill="#111"/></svg>
-    ) },
-    { id: 'facebook', href: 'https://facebook.com', label: 'Facebook', svg: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.99 3.66 9.12 8.44 9.88v-6.99H8.9v-2.9h1.54V9.41c0-1.52.9-2.36 2.28-2.36.66 0 1.35.12 1.35.12v1.49h-.76c-.75 0-.98.47-.98.95v1.15h1.67l-.27 2.9h-1.4v6.99C18.34 21.12 22 16.99 22 12z" fill="#111"/></svg>
-    ) },
-    { id: 'instagram', href: 'https://instagram.com', label: 'Instagram', svg: (
+   
+    { id: 'instagram', href: 'https://www.instagram.com/gurukul_youth_?igsh=MTVvNWU0bXRpM2JvMQ==', label: 'Instagram', svg: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 6.2A4.8 4.8 0 1 0 16.8 13 4.8 4.8 0 0 0 12 8.2zm6.5-.8a1.2 1.2 0 1 0 1.2 1.2 1.2 1.2 0 0 0-1.2-1.2z" fill="#111"/></svg>
     ) },
-    { id: 'linkedin', href: 'https://linkedin.com', label: 'LinkedIn', svg: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 3A2 2 0 0 1 21 5v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.5 17H6V10h2.5v7zM7.3 8.7A1.3 1.3 0 1 0 6 7.4 1.3 1.3 0 0 0 7.3 8.7zM18 17h-2.4v-3.8c0-.9-.3-1.5-1.1-1.5-.6 0-.9.4-1 1v4.3H10V10h2.3v1c.3-.6 1-1.3 2.4-1.3 1.5 0 2.6 1 2.6 3.3V17z" fill="#111"/></svg>
-    ) }
+   
   ]
 
   return (
@@ -213,21 +203,37 @@ function Footer() {
 }
 
 export default function App() {
-  const [registered, setRegistered] = useState(120)
+  const [registered, setRegistered] = useState(0)
   const [showReg, setShowReg] = useState(false)
 
   function handleRegister() {
-    setRegistered((s) => s + 1)
+    // local increment removed: registration count is sourced from Firestore
+    // Keep function for compatibility with components that might call it.
   }
 
   function handleOpenForm() { setShowReg(true) }
   function handleCloseForm() { setShowReg(false) }
   function handleFormSubmit() {
-    // here you could send values to server; we increment count and close modal
-    setRegistered(s=>s+1)
+    // Close modal; actual registration counting happens via Firestore subscription.
     setShowReg(false)
     // optionally: store submission in localStorage or show toast
   }
+
+  // Subscribe to Firestore registration count on mount
+  useEffect(() => {
+    let unsub = null
+    try {
+      unsub = subscribeRegistrationCount((count) => {
+        setRegistered(count)
+      })
+    } catch (err) {
+      // fallback: fetch once
+      fetchRegistrationCount().then((c) => setRegistered(c)).catch(() => {})
+    }
+
+    // initial fetch if needed (subscribeRegistrationCount will call callback on initial snapshot)
+    return () => { if (unsub) unsub() }
+  }, [])
 
   return (
     <div className="app-root white-theme">
@@ -236,7 +242,7 @@ export default function App() {
         <Hero />
         <Quote />
         <About onOpenForm={handleOpenForm} />
-        <StatsCard value={registered} targetDate={'2026-11-01T00:00:00'} />
+        <StatsCard value={registered} targetDate={'2026-01-11T00:00:00'} />
         <Speakers />
       </main>
       <Footer />

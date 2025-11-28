@@ -119,8 +119,8 @@ body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;color:var(--da
 
 /* Speakers */
 .speakers{padding:6px 0 24px}
-.speaker-list{display:flex;flex-direction:column;gap:18px;margin-top:8px}
-.speaker-card{background:var(--card);border-radius:8px;overflow:hidden;box-shadow:0 2px 6px var(--shadow);text-align:center}
+.speaker-list{display:flex;flex-direction:column;gap:18px;margin-top:8px;align-items:center}
+.speaker-card{background:var(--card);border-radius:8px;overflow:hidden;box-shadow:0 2px 6px var(--shadow);text-align:center;width:100%;max-width:360px}
 .speaker-thumb{width:100%;height:140px;display:block;object-fit:cover}
 .speaker-name{padding:12px 8px;font-weight:600;color:#333}
 
@@ -345,7 +345,7 @@ body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;color:var(--da
   .plus{font-size:40px}
   .divider{height:80px}
   /* speakers become a grid */
-  .speaker-list{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:16px}
+  .speaker-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:16px;justify-content:center}
   .speaker-thumb{height:160px}
   .speaker-name{height:40px}
   .menu-label{display:none}

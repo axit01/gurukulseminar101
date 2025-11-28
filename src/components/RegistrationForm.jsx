@@ -33,8 +33,11 @@ export function RulesAndFormModal({ open, onClose, onSubmit }) {
               <ul>
                 <li>Be respectful to other attendees.</li>
                 <li>Arrive on time and follow event instructions.</li>
-                <li>Participants must be at least 13 years old.</li>
+                <li>Participants must be at least 17 to 25 years old.</li>
                 <li>Payment must be completed to confirm registration.</li>
+                <li>All information provided must be accurate and truthful.</li>
+                <li>Check whatsapp for other details</li>
+                <li>passes can be provide in E-Mail</li>
               </ul>
             </div>
             <label className="rules-accept">
@@ -105,7 +108,7 @@ export function RegistrationForm({ onCancel, onSubmit }) {
     else {
       const dob = new Date(values.dob)
       const age = Math.floor((Date.now() - dob.getTime()) / (365.25*24*60*60*1000))
-      if (age < 13) errs.dob = 'You must be at least 13 years old'
+      if (age < 17 || age > 25) errs.dob = 'You must be at least 17 to 25 years old'
     }
     if (!values.address.trim()) errs.address = 'Address required'
     setErrors(errs)
@@ -135,15 +138,20 @@ export function RegistrationForm({ onCancel, onSubmit }) {
       setPaymentStatus('succeeded')
       setSubmitting(false)
 
-      // Save registration to Firestore (best-effort, non-blocking). Keep UX even if save fails.
-      saveRegistration({
-        ...values,
-        paymentConfirmed: true,
-        paymentMethod: 'razorpay',
-        paymentResponse,
-      })
-      
-      onSubmit && onSubmit({
+      // Save registration to Firestore (best-effort). Await it and handle errors quietly
+      try {
+        await saveRegistration({
+          ...values,
+          paymentConfirmed: true,
+          paymentMethod: 'razorpay',
+          paymentResponse,
+        })
+      } catch (saveErr) {
+        console.error('Failed to save registration', saveErr)
+      }
++
++
++      onSubmit && onSubmit({
         ...values,
         paymentConfirmed: true,
         paymentMethod: 'razorpay'
