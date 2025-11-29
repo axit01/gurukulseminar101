@@ -3,6 +3,7 @@ import { stripePromise } from '../stripe-config'
 import { openRazorpay } from './Razorpay'
 import { toast } from 'sonner'
 import { saveRegistration } from '../Firebase'
+import QRCode from 'qrcode'
 
 export function RulesAndFormModal({ open, onClose, onSubmit }) {
   const [accepted, setAccepted] = useState(false)
@@ -115,6 +116,23 @@ export function RegistrationForm({ onCancel, onSubmit }) {
     return Object.keys(errs).length === 0
   }
 
+
+
+  async function generateAndDownloadQRCode(text) {
+    try {
+      const url = await QRCode.toDataURL(text)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = 'registration-qr.png'
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    } catch (err) {
+      console.error('Failed to generate QR code', err)
+      toast.error('Failed to generate QR code')
+    }
+  }
+
   async function handleSubmit(e) {
     e.preventDefault()
     if (!validate()) return
@@ -140,18 +158,23 @@ export function RegistrationForm({ onCancel, onSubmit }) {
 
       // Save registration to Firestore (best-effort). Await it and handle errors quietly
       try {
-        await saveRegistration({
+        const docId = await saveRegistration({
           ...values,
           paymentConfirmed: true,
           paymentMethod: 'razorpay',
           paymentResponse,
         })
+        
+        // Generate and download QR code with the document ID
+        if (docId) {
+          await generateAndDownloadQRCode(docId)
+        }
       } catch (saveErr) {
         console.error('Failed to save registration', saveErr)
       }
-+
-+
-+      onSubmit && onSubmit({
+
+
+      onSubmit && onSubmit({
         ...values,
         paymentConfirmed: true,
         paymentMethod: 'razorpay'
