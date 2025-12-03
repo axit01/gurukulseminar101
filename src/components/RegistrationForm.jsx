@@ -42,24 +42,30 @@ export function RulesAndFormModal({ open, onClose, onSubmit, onOpenPolicy }) {
               </ul>
               <p style={{ fontSize: '13px', marginTop: '12px', color: '#666' }}>
                 By registering, you agree to our{' '}
-                <button 
-                  onClick={() => onOpenPolicy('terms')} 
-                  style={{ background: 'none', border: 'none', padding: 0, color: 'var(--accent)', textDecoration: 'underline', cursor: 'pointer', fontSize: 'inherit' }}
+                <a 
+                  href="/policies/terms" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: 'var(--accent)', textDecoration: 'underline', cursor: 'pointer', fontSize: 'inherit' }}
                 >
                   Terms & Conditions
-                </button>,{' '}
-                <button 
-                  onClick={() => onOpenPolicy('privacy')} 
-                  style={{ background: 'none', border: 'none', padding: 0, color: 'var(--accent)', textDecoration: 'underline', cursor: 'pointer', fontSize: 'inherit' }}
+                </a>,{' '}
+                <a 
+                  href="/policies/privacy" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: 'var(--accent)', textDecoration: 'underline', cursor: 'pointer', fontSize: 'inherit' }}
                 >
                   Privacy Policy
-                </button>, and{' '}
-                <button 
-                  onClick={() => onOpenPolicy('refund')} 
-                  style={{ background: 'none', border: 'none', padding: 0, color: 'var(--accent)', textDecoration: 'underline', cursor: 'pointer', fontSize: 'inherit' }}
+                </a>, and{' '}
+                <a 
+                  href="/policies/refund" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: 'var(--accent)', textDecoration: 'underline', cursor: 'pointer', fontSize: 'inherit' }}
                 >
                   Refund Policy
-                </button>.
+                </a>.
               </p>
             </div>
             <label className="rules-accept">

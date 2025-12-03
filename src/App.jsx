@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom'
 import './App.css'
 import { Toaster } from 'sonner'
 import brandLogo from './assets/splash_image.png'
@@ -7,29 +8,49 @@ import speakerImage from './assets/Speaker.JPG'
 import { RulesAndFormModal } from './components/RegistrationForm'
 import { subscribeRegistrationCount, fetchRegistrationCount } from './Firebase'
 import { PoliciesModal } from './components/Policies'
+import PolicyPage from './components/PolicyPage'
 
 function Header() {
   const [open, setOpen] = useState(false)
+  const navigate = useNavigate()
 
   function handleRegisterClick(e) {
     e.preventDefault()
-    // only scroll to register section; do not auto-increment
-    const el = document.getElementById('register')
-    if (el) el.scrollIntoView({ behavior: 'smooth' })
+    // if we are not on home page, go there first
+    if (window.location.pathname !== '/') {
+      navigate('/')
+      setTimeout(() => {
+        const el = document.getElementById('register')
+        if (el) el.scrollIntoView({ behavior: 'smooth' })
+      }, 100)
+    } else {
+      const el = document.getElementById('register')
+      if (el) el.scrollIntoView({ behavior: 'smooth' })
+    }
     setOpen(false)
   }
 
   function handleNav(e, id) {
     e.preventDefault()
-    const el = document.getElementById(id)
-    if (el) el.scrollIntoView({ behavior: 'smooth' })
+    if (window.location.pathname !== '/') {
+      navigate('/')
+      setTimeout(() => {
+        const el = document.getElementById(id)
+        if (el) el.scrollIntoView({ behavior: 'smooth' })
+      }, 100)
+    } else {
+      const el = document.getElementById(id)
+      if (el) el.scrollIntoView({ behavior: 'smooth' })
+    }
     setOpen(false)
   }
 
   return (
     <header className={`site-header ${open ? 'open' : ''}`}>
       <div className="brand">
-        <img src={brandLogo} alt="brand" className="brand-logo" />
+        <Link to="/">
+          <img src={brandLogo} alt="brand" className="brand-logo" />
+        </Link>
       </div>
 
       <nav className="nav">
@@ -180,7 +201,6 @@ function Speakers() {
 }
 
 
-
 function Footer({ onOpenPolicy }) {
   const socials = [
    
@@ -202,16 +222,16 @@ function Footer({ onOpenPolicy }) {
         ))}
       </div>
       <div className="footer-links">
-        <button className="footer-link" style={{background:'none', border:'none', padding:0}} onClick={() => onOpenPolicy('terms')}>Terms & Conditions</button>
-        <button className="footer-link" style={{background:'none', border:'none', padding:0}} onClick={() => onOpenPolicy('privacy')}>Privacy Policy</button>
-        <button className="footer-link" style={{background:'none', border:'none', padding:0}} onClick={() => onOpenPolicy('refund')}>Refund Policy</button>
-        <button className="footer-link" style={{background:'none', border:'none', padding:0}} onClick={() => onOpenPolicy('contact')}>Contact Us</button>
+        <Link to="/policies/terms" className="footer-link">Terms & Conditions</Link>
+        <Link to="/policies/privacy" className="footer-link">Privacy Policy</Link>
+        <Link to="/policies/refund" className="footer-link">Refund Policy</Link>
+        <Link to="/policies/contact" className="footer-link">Contact Us</Link>
       </div>
     </footer>
   )
 }
 
-export default function App() {
+function Home() {
   const [registered, setRegistered] = useState(0)
   const [showReg, setShowReg] = useState(false)
   const [policyType, setPolicyType] = useState(null)
@@ -257,8 +277,21 @@ export default function App() {
       </main>
       <Footer onOpenPolicy={setPolicyType} />
       <RulesAndFormModal open={showReg} onClose={handleCloseForm} onSubmit={handleFormSubmit} onOpenPolicy={setPolicyType} />
+      {/* Keep modal for backward compatibility or quick view if needed, though links now go to pages */}
       <PoliciesModal type={policyType} onClose={() => setPolicyType(null)} />
-      <Toaster position="bottom-right" />
     </div>
   )
 }
+
+export default function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/policies/:type" element={<PolicyPage />} />
+      </Routes>
+      <Toaster position="bottom-right" />
+    </Router>
+  )
+}
+
