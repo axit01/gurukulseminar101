@@ -37,7 +37,7 @@ export function RulesAndFormModal({ open, onClose, onSubmit, onOpenPolicy }) {
                 <li>Participants must be at least 17 to 25 years old.</li>
                 <li>Payment must be completed to confirm registration.</li>
                 <li>All information provided must be accurate and truthful.</li>
-              <p>Check whatsapp for other details</p>
+              <li>Check whatsapp for other details</li>
                 <li>passes can be provide in E-Mail</li>
               </ul>
               <p style={{ fontSize: '13px', marginTop: '12px', color: '#666' }}>
