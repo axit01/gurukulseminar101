@@ -5,7 +5,7 @@ import { toast } from 'sonner'
 import { saveRegistration } from '../Firebase'
 import QRCode from 'qrcode'
 
-export function RulesAndFormModal({ open, onClose, onSubmit }) {
+export function RulesAndFormModal({ open, onClose, onSubmit, onOpenPolicy }) {
   const [accepted, setAccepted] = useState(false)
   const [showForm, setShowForm] = useState(false)
 
@@ -37,9 +37,30 @@ export function RulesAndFormModal({ open, onClose, onSubmit }) {
                 <li>Participants must be at least 17 to 25 years old.</li>
                 <li>Payment must be completed to confirm registration.</li>
                 <li>All information provided must be accurate and truthful.</li>
-                <li>Check whatsapp for other details</li>
+              <p>Check whatsapp for other details</p>
                 <li>passes can be provide in E-Mail</li>
               </ul>
+              <p style={{ fontSize: '13px', marginTop: '12px', color: '#666' }}>
+                By registering, you agree to our{' '}
+                <button 
+                  onClick={() => onOpenPolicy('terms')} 
+                  style={{ background: 'none', border: 'none', padding: 0, color: 'var(--accent)', textDecoration: 'underline', cursor: 'pointer', fontSize: 'inherit' }}
+                >
+                  Terms & Conditions
+                </button>,{' '}
+                <button 
+                  onClick={() => onOpenPolicy('privacy')} 
+                  style={{ background: 'none', border: 'none', padding: 0, color: 'var(--accent)', textDecoration: 'underline', cursor: 'pointer', fontSize: 'inherit' }}
+                >
+                  Privacy Policy
+                </button>, and{' '}
+                <button 
+                  onClick={() => onOpenPolicy('refund')} 
+                  style={{ background: 'none', border: 'none', padding: 0, color: 'var(--accent)', textDecoration: 'underline', cursor: 'pointer', fontSize: 'inherit' }}
+                >
+                  Refund Policy
+                </button>.
+              </p>
             </div>
             <label className="rules-accept">
               <input

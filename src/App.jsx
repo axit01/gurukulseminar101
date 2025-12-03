@@ -6,6 +6,7 @@ import heroImage from './assets/image.png'
 import speakerImage from './assets/Speaker.JPG'
 import { RulesAndFormModal } from './components/RegistrationForm'
 import { subscribeRegistrationCount, fetchRegistrationCount } from './Firebase'
+import { PoliciesModal } from './components/Policies'
 
 function Header() {
   const [open, setOpen] = useState(false)
@@ -178,7 +179,9 @@ function Speakers() {
   )
 }
 
-function Footer() {
+
+
+function Footer({ onOpenPolicy }) {
   const socials = [
    
     { id: 'instagram', href: 'https://www.instagram.com/gurukul_youth_?igsh=MTVvNWU0bXRpM2JvMQ==', label: 'Instagram', svg: (
@@ -198,6 +201,12 @@ function Footer() {
           </a>
         ))}
       </div>
+      <div className="footer-links">
+        <button className="footer-link" style={{background:'none', border:'none', padding:0}} onClick={() => onOpenPolicy('terms')}>Terms & Conditions</button>
+        <button className="footer-link" style={{background:'none', border:'none', padding:0}} onClick={() => onOpenPolicy('privacy')}>Privacy Policy</button>
+        <button className="footer-link" style={{background:'none', border:'none', padding:0}} onClick={() => onOpenPolicy('refund')}>Refund Policy</button>
+        <button className="footer-link" style={{background:'none', border:'none', padding:0}} onClick={() => onOpenPolicy('contact')}>Contact Us</button>
+      </div>
     </footer>
   )
 }
@@ -205,6 +214,7 @@ function Footer() {
 export default function App() {
   const [registered, setRegistered] = useState(0)
   const [showReg, setShowReg] = useState(false)
+  const [policyType, setPolicyType] = useState(null)
 
   function handleRegister() {
     // local increment removed: registration count is sourced from Firestore
@@ -245,8 +255,9 @@ export default function App() {
         <StatsCard value={registered} targetDate={'2026-01-11T00:00:00'} />
         <Speakers />
       </main>
-      <Footer />
-      <RulesAndFormModal open={showReg} onClose={handleCloseForm} onSubmit={handleFormSubmit} />
+      <Footer onOpenPolicy={setPolicyType} />
+      <RulesAndFormModal open={showReg} onClose={handleCloseForm} onSubmit={handleFormSubmit} onOpenPolicy={setPolicyType} />
+      <PoliciesModal type={policyType} onClose={() => setPolicyType(null)} />
       <Toaster position="bottom-right" />
     </div>
   )
