@@ -225,6 +225,7 @@ function Footer({ onOpenPolicy }) {
         <Link to="/policies/terms" className="footer-link">Terms & Conditions</Link>
         <Link to="/policies/privacy" className="footer-link">Privacy Policy</Link>
         <Link to="/policies/refund" className="footer-link">Refund Policy</Link>
+        <Link to="/policies/shipping" className="footer-link">Shipping Policy</Link>
         <Link to="/policies/contact" className="footer-link">Contact Us</Link>
       </div>
     </footer>
