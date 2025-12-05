@@ -254,6 +254,35 @@ export function RegistrationForm({ onCancel, onSubmit }) {
            paymentStatus === 'succeeded' ? 'Payment Complete' : 'Pay 50 Rupees'}
         </button>
       </div>
+
+      <div className="form-footer" style={{ marginTop: '32px', borderTop: '1px solid #eee', paddingTop: '24px', textAlign: 'center' }}>
+        <div style={{ marginBottom: '20px' }}>
+          <p style={{ fontSize: '14px', fontWeight: '600', color: '#444', marginBottom: '12px' }}>Follow us for updates</p>
+          <a 
+            href="https://www.instagram.com/gurukul_youth_?igsh=MTVvNWU0bXRpM2JvMQ==" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="social-btn"
+            style={{ color: '#c23b3b' }}
+            aria-label="Instagram"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 6.2A4.8 4.8 0 1 0 16.8 13 4.8 4.8 0 0 0 12 8.2zm6.5-.8a1.2 1.2 0 1 0 1.2 1.2 1.2 1.2 0 0 0-1.2-1.2z" fill="currentColor"/>
+            </svg>
+          </a>
+        </div>
+
+        <div className="footer-links" style={{ justifyContent: 'center', display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
+          <a href="/policies/terms" target="_blank" rel="noopener noreferrer" className="footer-link">Terms & Conditions</a>
+          <a href="/policies/privacy" target="_blank" rel="noopener noreferrer" className="footer-link">Privacy Policy</a>
+          <a href="/policies/refund" target="_blank" rel="noopener noreferrer" className="footer-link">Refund Policy</a>
+          <a href="/policies/shipping" target="_blank" rel="noopener noreferrer" className="footer-link">Shipping Policy</a>
+          <a href="/policies/contact" target="_blank" rel="noopener noreferrer" className="footer-link">Contact Us</a>
+        </div>
+        <p style={{ textAlign: 'center', fontSize: '12px', color: '#999', marginTop: '20px', marginBottom: 0 }}>
+          © {new Date().getFullYear()} Youth Seminar. All rights reserved.
+        </p>
+      </div>
     </form>
   )
 }
